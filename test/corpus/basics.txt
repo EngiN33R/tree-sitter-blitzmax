@@ -1,0 +1,46 @@
+==================
+Case insensitive declarations and literals
+==================
+superstrict
+Local count:Int = $ff
+Print "hello~n"
+
+---
+
+(source_file
+  (simple_statement (keyword))
+  (variable_declaration (keyword) (identifier) (punctuation) (builtin_type) (operator) (number))
+  (simple_statement (identifier) (string (string_content) (escape_sequence))))
+
+==================
+Documentation and incomplete Rem block
+==================
+Rem
+bbdoc: This is not a Type declaration
+End Rem
+Rem
+unfinished
+
+---
+
+(source_file (block_comment) (block_comment))
+
+==================
+Nested definitions with spaced terminators
+==================
+Type TExample
+  Method Update()
+    Print 1
+  End Method
+End Type
+
+---
+
+(source_file
+  (type_definition
+    (keyword) (identifier)
+    (method_definition
+      (keyword) (identifier) (parenthesized_group)
+      (simple_statement (identifier) (number))
+      (keyword))
+    (keyword)))

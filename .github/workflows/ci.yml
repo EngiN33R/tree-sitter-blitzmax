@@ -2,85 +2,79 @@ name: CI
 
 on:
   push:
-    branches:
-      - master
-      - main
-    paths:
-      - grammar.js
-      - src/**
-      - test/**
-      - bindings/**
-      - binding.gyp
-      - .github/workflows/ci.yml
+    branches: [main]
   pull_request:
-    paths:
-      - grammar.js
-      - src/**
-      - test/**
-      - bindings/**
-      - binding.gyp
-      - .github/workflows/ci.yml
+
+permissions:
+  contents: read
 
 concurrency:
-  group: ${{github.workflow}}-${{github.ref}}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   test:
-    name: Test parser
-    runs-on: ${{matrix.os}}
-    if: >-
-      !github.event.repository.is_template &&
-      github.event.head_commit.message != 'Initial commit'
+    name: Test parser (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-      - name: Set up tree-sitter
+      - uses: actions/checkout@v6
+      - name: Set up Tree-sitter
         uses: tree-sitter/setup-action/cli@v2
-      - name: Run tests
+        with:
+          tree-sitter-ref: v0.25.10
+      - name: Test generated parser and Rust bindings
         uses: tree-sitter/parser-test-action@v3
         with:
-          test-rust: ${{runner.os == 'Linux'}}
+          abi-version: '14'
+          test-rust: ${{ runner.os == 'Linux' }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '10.8.0'
+      - name: Install Node binding dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Test Node binding
+        run: node --test bindings/node/*_test.js
+
   fuzz:
     name: Fuzz scanner
     runs-on: ubuntu-latest
-    if: >-
-      !github.event.repository.is_template &&
-      github.event.head_commit.message != 'Initial commit'
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 2
       - name: Check for scanner changes
         id: scanner-check
-        shell: sh
-        run: |-
-          {
-            test -f src/scanner.c && ! git diff --quiet HEAD^ -- "$_" &&
-            printf 'changed=true\n' || printf 'changed=false\n'
-          } >> "$GITHUB_OUTPUT"
+        shell: bash
+        run: |
+          if git diff --quiet HEAD^ HEAD -- src/scanner.c; then
+            echo 'changed=false' >> "$GITHUB_OUTPUT"
+          else
+            echo 'changed=true' >> "$GITHUB_OUTPUT"
+          fi
       - name: Run fuzzer
         uses: tree-sitter/fuzz-action@v4
         if: steps.scanner-check.outputs.changed == 'true'
+        with:
+          tree-sitter-version: v0.25.10
 
   query:
     name: Validate queries
     runs-on: ubuntu-latest
     steps:
-      - name: Set up repository
-        uses: actions/checkout@v6
-
-      - name: Set up tree-sitter
-        uses: tree-sitter/setup-action/cli@v2
-
+      - uses: actions/checkout@v6
+      - uses: tree-sitter/setup-action/cli@v2
+        with:
+          tree-sitter-ref: v0.25.10
       - name: Build parser
         run: tree-sitter build
-
       - name: Set up ts_query_ls
         run: curl -fL https://github.com/ribru17/ts_query_ls/releases/latest/download/ts_query_ls-x86_64-unknown-linux-gnu.tar.gz | tar -xz
-
       - name: Check queries
         run: ./ts_query_ls check -f queries/

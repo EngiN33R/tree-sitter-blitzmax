@@ -1,0 +1,58 @@
+{
+  "name": "tree-sitter-blitzmax",
+  "version": "0.1.0",
+  "description": "Case-insensitive Tree-sitter grammar for BlitzMax NG",
+  "repository": "https://github.com/EngiN33R/tree-sitter-blitzmax",
+  "license": "MIT",
+  "author": {
+    "name": "Ilya Gavrikov"
+  },
+  "main": "bindings/node",
+  "types": "bindings/node",
+  "keywords": [
+    "incremental",
+    "parsing",
+    "tree-sitter",
+    "blitzmax"
+  ],
+  "files": [
+    "grammar.js",
+    "tree-sitter.json",
+    "binding.gyp",
+    "prebuilds/**",
+    "bindings/node/*",
+    "queries/*",
+    "src/**",
+    "*.wasm"
+  ],
+  "dependencies": {
+    "node-addon-api": "^8.5.0",
+    "node-gyp-build": "^4.8.4"
+  },
+  "devDependencies": {
+    "node-gyp": "^11",
+    "prebuildify": "^6.0.1",
+    "tree-sitter": "^0.25.0",
+    "tree-sitter-cli": "0.25.10"
+  },
+  "peerDependencies": {
+    "tree-sitter": "^0.25.0"
+  },
+  "peerDependenciesMeta": {
+    "tree-sitter": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "install": "node-gyp-build",
+    "prestart": "tree-sitter build --wasm",
+    "start": "tree-sitter playground",
+    "test": "pnpm test:corpus && node --test bindings/node/*_test.js",
+    "generate": "tree-sitter generate --abi 14",
+    "test:corpus": "tree-sitter test"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@10.8.0"
+}

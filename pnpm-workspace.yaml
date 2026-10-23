@@ -1,0 +1,3 @@
+onlyBuiltDependencies:
+  - tree-sitter-cli
+  - tree-sitter

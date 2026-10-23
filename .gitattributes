@@ -1,2 +1,5 @@
-src/scanner.c -linguist-detectable
-queries/highlights.scm -linguist-detectable
+* text=auto eol=lf
+src/parser.c linguist-generated
+src/grammar.json linguist-generated
+src/node-types.json linguist-generated
+src/tree_sitter/* linguist-vendored
