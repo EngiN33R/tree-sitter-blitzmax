@@ -8,7 +8,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: tree-sitter/setup-action/cli@v2
         with:
           tree-sitter-ref: v0.25.10
