@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-blitzmax",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Case-insensitive Tree-sitter grammar for BlitzMax NG",
   "repository": "https://github.com/EngiN33R/tree-sitter-blitzmax",
   "license": "MIT",

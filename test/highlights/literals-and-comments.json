@@ -1,0 +1,13 @@
+{
+  "source": "Print True, False, Null\nPrint \"hello~nworld\"\nPrint \"\"\"first\nsecond\"\"\"\n' line comment\nRem\nFunction TNotCode()\nEnd Rem\n",
+  "captures": [
+    { "text": "True", "capture": "boolean" },
+    { "text": "False", "capture": "boolean" },
+    { "text": "Null", "capture": "constant.builtin" },
+    { "text": "hello", "capture": "string" },
+    { "text": "~n", "capture": "string.escape" },
+    { "text": "second", "capture": "string" },
+    { "text": "line comment", "capture": "comment" },
+    { "text": "TNotCode", "capture": "comment" }
+  ]
+}

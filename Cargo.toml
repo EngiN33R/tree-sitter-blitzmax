@@ -1,7 +1,7 @@
 [package]
 name = "tree-sitter-blitzmax"
 description = "Case-insensitive Tree-sitter grammar for BlitzMax NG"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Ilya Gavrikov"]
 license = "MIT"
 readme = "README.md"

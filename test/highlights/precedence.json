@@ -1,0 +1,10 @@
+{
+  "source": "Type TWidget\n Method TMethod()\n EndMethod\nEndType\nFunction TTest()\nEndFunction\nConst TConstant:Int = 1\nPrint TWidget\n",
+  "captures": [
+    { "text": "TWidget", "occurrence": 0, "capture": "type" },
+    { "text": "TMethod", "capture": "function.method" },
+    { "text": "TTest", "capture": "function" },
+    { "text": "TConstant", "capture": "constant" },
+    { "text": "TWidget", "occurrence": 1, "capture": "type" }
+  ]
+}

@@ -1,5 +1,8 @@
 (identifier) @variable
 
+((identifier) @type
+  (#match? @type "^T[A-Z][A-Za-z0-9_]*$"))
+
 (keyword) @keyword
 
 (builtin_type) @type.builtin
@@ -22,7 +25,7 @@
   (block_comment)
 ] @comment
 
-(preprocessor) @preproc
+(preprocessor) @keyword.directive
 
 (operator) @operator
 
@@ -69,6 +72,3 @@
   storage: (keyword) @_storage
   name: (identifier) @constant
   (#match? @_storage "^[Cc][Oo][Nn][Ss][Tt]$"))
-
-((identifier) @type
-  (#match? @type "^T[A-Z][A-Za-z0-9_]*$"))

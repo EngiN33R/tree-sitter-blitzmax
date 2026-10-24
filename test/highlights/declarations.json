@@ -1,0 +1,20 @@
+{
+  "source": "SuperStrict\n?win32\nStruct Vector\n Field x:Float\nEndStruct\nInterface Worker\n Method Run()\nEndInterface\nEnum Colour\n Red\nEndEnum\nExtern\n Function puts:Int(value:Byte Ptr)\nEndExtern\nFunction Add:Int(value:Int)\n Return value + 1\nEndFunction\nConst Answer:Int = 42\n",
+  "captures": [
+    { "text": "SuperStrict", "capture": "keyword" },
+    { "text": "?win32", "capture": "keyword.directive" },
+    { "text": "Vector", "capture": "type" },
+    { "text": "Worker", "capture": "type" },
+    { "text": "Run", "capture": "function.method" },
+    { "text": "Colour", "capture": "type" },
+    { "text": "puts", "capture": "function" },
+    { "text": "Add", "capture": "function" },
+    { "text": "value", "occurrence": 1, "capture": "variable" },
+    { "text": "Float", "capture": "type.builtin" },
+    { "text": "Answer", "capture": "constant" },
+    { "text": "42", "capture": "number" },
+    { "text": "+", "capture": "operator" },
+    { "text": "(", "capture": "punctuation.bracket" },
+    { "text": ":", "capture": "punctuation.delimiter" }
+  ]
+}
