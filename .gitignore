@@ -10,10 +10,11 @@
 /Cargo.lock
 /.build/
 /dist/
-/*.dll
-/*.so
-/*.dylib
+*.dll
+*.so
+*.dylib
 /prebuilds/
 *.egg-info/
 __pycache__/
 *.pyc
+*.pyd
